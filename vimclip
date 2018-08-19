@@ -12,4 +12,4 @@ fi
 
 TMP=$(mktemp -p /tmp -t vimclip.XXXXXXXX)
 $EDITOR $TMP
-cat $TMP | xsel -i -b
+xsel -i -b < $TMP
