@@ -14,7 +14,7 @@ vimclip requires `xsel` to be installed (`apt install xsel`, `pacman -S xsel`, .
 First **copy the script** to your `$HOME/bin` folder.
 Remember to mark it executable and try it out by running `vimclip` in a terminal.
 
-Next you'll want to set a shortcut to automatically spawn a terminal and run `vimscript`.
+Next you'll want to set a shortcut to automatically spawn a terminal and run `vimclip`.
 This will depend on your desktop environment and terminal of course:
 
 **Ubuntu with gnome-terminal**
