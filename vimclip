@@ -5,11 +5,22 @@ if ! [ -x "$(command -v $EDITOR)" ]; then
   exit 1
 fi
 
-if ! [ -x "$(command -v xsel)" ]; then
-  echo 'Error: xsel is not available.' >&2
-  exit 1
-fi
+if [ "Darwin" = $(uname) ]; then
+    if ! [ -x "$(command -v pbcopy)" ]; then
+      echo 'Error: pbcopy is not available.' >&2
+      exit 1
+    fi
 
-TMP=$(mktemp -p /tmp -t vimclip.XXXXXXXX)
-$EDITOR $TMP
-xsel -i -b < $TMP
+    TMP=$(mktemp -t vimclip)
+    $EDITOR $TMP
+    cat $TMP | pbcopy
+else
+    if ! [ -x "$(command -v xsel)" ]; then
+      echo 'Error: xsel is not available.' >&2
+      exit 1
+    fi
+
+    TMP=$(mktemp -p /tmp -t vimclip.XXXXXXXX)
+    $EDITOR $TMP
+    xsel -i -b < $TMP
+fi
