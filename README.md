@@ -7,7 +7,7 @@ I like to think of it as a poor man's [vim-anywhere](https://github.com/cknadler
 
 ### Step 1: Dependencies
 
-vimclip requires `xsel` to be installed (`apt install xsel`, `pacman -S xsel`, ...), and `$EDITOR` to be set to your favorite editor (probably vim).
+vimclip requires `xsel` to be installed on Linux systems (`apt install xsel`, `pacman -S xsel`, ...), and `$EDITOR` to be set to your favorite editor (probably vim).
 
 ### Step 2: Integration
 
