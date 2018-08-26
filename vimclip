@@ -5,7 +5,7 @@ if ! [ -x "$(command -v $EDITOR)" ]; then
   exit 1
 fi
 
-if [ "Darwin" = $(uname) ]; then
+if [ "Darwin" = $(uname -s) ]; then
     if ! [ -x "$(command -v pbcopy)" ]; then
       echo 'Error: pbcopy is not available.' >&2
       exit 1
@@ -13,7 +13,7 @@ if [ "Darwin" = $(uname) ]; then
 
     TMP=$(mktemp -t vimclip)
     $EDITOR $TMP
-    cat $TMP | pbcopy
+    pbcopy < $TMP
 else
     if ! [ -x "$(command -v xsel)" ]; then
       echo 'Error: xsel is not available.' >&2
