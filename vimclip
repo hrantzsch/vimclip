@@ -11,7 +11,8 @@ if [ "Darwin" = $(uname -s) ]; then
       exit 1
     fi
 
-    TMP=$(mktemp -t vimclip)
+    mkdir -p /tmp/vimclip
+    TMP=$(mktemp -t vimclip/vimclip)
     $EDITOR $TMP
     pbcopy < $TMP
 else
@@ -20,7 +21,8 @@ else
       exit 1
     fi
 
-    TMP=$(mktemp -p /tmp -t vimclip.XXXXXXXX)
+    mkdir -p /tmp/vimclip
+    TMP=$(mktemp -p /tmp/vimclip -t vimclip.XXXXXXXX)
     $EDITOR $TMP
     xsel -i -b < $TMP
 fi
