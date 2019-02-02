@@ -11,7 +11,10 @@ if [ "Darwin" = $(uname -s) ]; then
       exit 1
     fi
 
-    mkdir -p /tmp/vimclip
+    if [ -z $TMPDIR ]; then
+        TMPDIR=/tmp
+    fi
+    mkdir -p $TMPDIR/vimclip
     TMP=$(mktemp -t vimclip/vimclip)
     $EDITOR $TMP
     pbcopy < $TMP
