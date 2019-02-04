@@ -5,10 +5,10 @@ if ! [ -x "$(command -v $EDITOR)" ]; then
   exit 1
 fi
 
-if [ -z $TMPDIR ]; then
+if [ -z "$TMPDIR" ]; then
     TMPDIR=/tmp
 fi
-mkdir -p $TMPDIR/vimclip
+mkdir -p "$TMPDIR/vimclip"
 
 if [ "Darwin" = $(uname -s) ]; then
     if ! [ -x "$(command -v pbcopy)" ]; then
@@ -17,15 +17,15 @@ if [ "Darwin" = $(uname -s) ]; then
     fi
 
     TMP=$(mktemp -t vimclip/vimclip)
-    $EDITOR $TMP
-    pbcopy < $TMP
+    $EDITOR "$TMP"
+    pbcopy < "$TMP"
 else
     if ! [ -x "$(command -v xsel)" ]; then
       echo 'Error: xsel is not available.' >&2
       exit 1
     fi
 
-    TMP=$(mktemp -p $TMPDIR/vimclip -t vimclip.XXXXXXXX)
-    $EDITOR $TMP
-    xsel -i -b < $TMP
+    TMP=$(mktemp -p "$TMPDIR/vimclip" -t vimclip.XXXXXXXX)
+    $EDITOR "$TMP"
+    xsel -i -b < "$TMP"
 fi
