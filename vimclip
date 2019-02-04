@@ -5,13 +5,18 @@ if ! [ -x "$(command -v $EDITOR)" ]; then
   exit 1
 fi
 
+if [ -z $TMPDIR ]; then
+    TMPDIR=/tmp
+fi
+mkdir -p $TMPDIR/vimclip
+
 if [ "Darwin" = $(uname -s) ]; then
     if ! [ -x "$(command -v pbcopy)" ]; then
       echo 'Error: pbcopy is not available.' >&2
       exit 1
     fi
 
-    TMP=$(mktemp -t vimclip)
+    TMP=$(mktemp -t vimclip/vimclip)
     $EDITOR $TMP
     if [ -s $TMP ]; then
         pbcopy < $TMP
@@ -24,7 +29,7 @@ else
       exit 1
     fi
 
-    TMP=$(mktemp -p /tmp -t vimclip.XXXXXXXX)
+    TMP=$(mktemp -p $TMPDIR/vimclip -t vimclip.XXXXXXXX)
     $EDITOR $TMP
     if [ -s $TMP ]; then
         xsel -i -b < $TMP
