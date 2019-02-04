@@ -38,7 +38,7 @@ Don't hesitate to open an issue if not.
 ### Damn I Lost the Clipboard Content
 
 Don't worry, you won't have to type it all again.
-vimclip stores your input in a temporary file at `/tmp/vimclip.XXXXXXXX` (where XXX... is replaced by a random string).
+vimclip stores your input in a temporary file at `/tmp/vimclip/vimclip.XXXXXXXX` (where XXX... is replaced by a random string).
 So if you accidentally copied something else into your clipboard before pasting your vimclip input, just go and grab the content from there.
 
 ### I Want to Use Another Editor
