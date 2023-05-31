@@ -23,8 +23,9 @@ else
       echo 'Error: xsel is not available.' >&2
       exit 1
     fi
-
+    
     TMP=$(mktemp -p /tmp -t vimclip.XXXXXXXX)
+    xsel -o -p > $TMP
     $EDITOR $TMP
     if [ -s $TMP ]; then
         xsel -i -b < $TMP
