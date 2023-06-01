@@ -1,34 +1,39 @@
 #!/bin/bash
 
-if ! [ -x "$(command -v $EDITOR)" ]; then
-  echo 'Error: $EDITOR is not set.' >&2
+# vimclip is a tiny script to spawn your favorite $EDITOR and leave what you
+# typed in your clipboard.
+#
+# Usage: vimclip
+#
+# The following environment variables can be set to customize vimclip's behavior:
+#
+# - EDITOR: The text editor to use. If not set, vim is used by default.
+# - VIMCLIP_CLIPBOARD_COMMAND: The command to use to copy text to the clipboard.
+#   If not set, pbcopy is used on macOS and xsel -i -b is used on other systems.
+
+VC_EDITOR="${EDITOR:-vim}"
+if ! [ -x "$(command -v $VC_EDITOR)" ]; then
+  echo "'$VC_EDITOR' is not found or not executable. Please set \$EDITOR." >&2
   exit 1
 fi
 
-if [ "Darwin" = $(uname -s) ]; then
-    if ! [ -x "$(command -v pbcopy)" ]; then
-      echo 'Error: pbcopy is not available.' >&2
-      exit 1
-    fi
-
+if [ "Darwin" = "$(uname -s)" ]; then
+    : "${VIMCLIP_CLIPBOARD_COMMAND:=pbcopy}"
     TMP=$(mktemp -t vimclip)
-    $EDITOR $TMP
-    if [ -s $TMP ]; then
-        pbcopy < $TMP
-    else
-        rm $TMP
-    fi
 else
-    if ! [ -x "$(command -v xsel)" ]; then
-      echo 'Error: xsel is not available.' >&2
-      exit 1
-    fi
+    : "${VIMCLIP_CLIPBOARD_COMMAND:=xsel -i -b}"
+    TMP=$(mktemp -p /tmp vimclip.XXXXXXXX)
+fi
 
-    TMP=$(mktemp -p /tmp -t vimclip.XXXXXXXX)
-    $EDITOR $TMP
-    if [ -s $TMP ]; then
-        xsel -i -b < $TMP
-    else
-        rm $TMP
-    fi
+if ! [ -x "$(command -v $VIMCLIP_CLIPBOARD_COMMAND)" ]; then
+  echo "'$VIMCLIP_CLIPBOARD_COMMAND' is not found or not executable. Please set \$VIMCLIP_CLIPBOARD_COMMAND." >&2
+  exit 1
+fi
+
+$VC_EDITOR "$TMP"
+
+if [ -s "$TMP" ]; then
+    $VIMCLIP_CLIPBOARD_COMMAND < "$TMP"
+else  # don't override clipboard if the temp file is empty
+    rm "$TMP"
 fi

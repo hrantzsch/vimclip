@@ -7,15 +7,19 @@ I like to think of it as a poor man's [vim-anywhere](https://github.com/cknadler
 
 ### Step 1: Dependencies
 
-vimclip requires `xsel` to be installed on Linux systems (`apt install xsel`, `pacman -S xsel`, ...), and `$EDITOR` to be set to your favorite editor (probably vim).
+By default, vimclip relies on `xsel` on Linux and `pbcopy` on macOS to copy what you typed into the clipboard.
+Make sure they are available, or make vimclip use a different command by setting `$VIMCLIP_CLIPBOARD_COMMAND`.
+
+You should also set `$EDITOR` to your favorite editor (probably vim).
 
 ### Step 2: Integration
 
-First **copy the script** to your `$HOME/bin` folder.
-Remember to mark it executable and try it out by running `vimclip` in a terminal.
+**Copy the script** to a folder in your `$PATH` and mark it executable.
+Arch users can install `vimclip-git` from the AUR.
 
-Next you'll want to set a shortcut to automatically spawn a terminal and run `vimclip`.
-This will depend on your desktop environment and terminal of course:
+After that, you'll want to set a shortcut to automatically spawn a terminal and run `vimclip`.
+This will depend on your desktop environment and terminal.
+Some examples:
 
 **Ubuntu with gnome-terminal**
 
@@ -24,7 +28,8 @@ Call it vimclip, set the command to `gnome-terminal -- vimclip`, and assign the 
 
 **Other terminal emulators**
 
-For **KDE's konsole** set the command to `konsole -e vimclip`. For **kitty**  simply set it to `kitty vimclip`.
+For **KDE's konsole** set the command to `konsole -e vimclip`.
+For **kitty**  simply set it to `kitty vimclip`.
 
 If you run another desktop environment with another terminal emulator I'm sure you'll be able to figure it out as well.
 Don't hesitate to open an issue if not.
