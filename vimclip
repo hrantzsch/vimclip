@@ -9,7 +9,8 @@
 #
 # - EDITOR: The text editor to use. If not set, vim is used by default.
 # - VIMCLIP_CLIPBOARD_COMMAND: The command to use to copy text to the clipboard.
-#   If not set, pbcopy is used on macOS and xsel -i -b is used on other systems.
+#   If not set, vimclip falls back to using pbcopy on macOS, wl-copy in a Wayland
+#   session and xsel -i -b otherwise.
 
 VC_EDITOR="${EDITOR:-vim}"
 if ! [ -x "$(command -v $VC_EDITOR)" ]; then
@@ -21,7 +22,11 @@ if [ "Darwin" = "$(uname -s)" ]; then
     : "${VIMCLIP_CLIPBOARD_COMMAND:=pbcopy}"
     TMP=$(mktemp -t vimclip)
 else
-    : "${VIMCLIP_CLIPBOARD_COMMAND:=xsel -i -b}"
+    if [ "$XDG_SESSION_TYPE" = "wayland" ]; then
+      : "${VIMCLIP_CLIPBOARD_COMMAND:=wl-copy}"
+    else
+      : "${VIMCLIP_CLIPBOARD_COMMAND:=xsel -i -b}"
+    fi
     TMP=$(mktemp -p /tmp vimclip.XXXXXXXX)
 fi
 
