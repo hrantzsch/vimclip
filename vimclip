@@ -23,7 +23,7 @@ if [ "Darwin" = "$(uname -s)" ]; then
     TMP=$(mktemp -t vimclip)
 else
     if [ "$XDG_SESSION_TYPE" = "wayland" ]; then
-      : "${VIMCLIP_CLIPBOARD_COMMAND:=wl-copy}"
+      : "${VIMCLIP_CLIPBOARD_COMMAND:=wl-copy --trim-newline}"
     else
       : "${VIMCLIP_CLIPBOARD_COMMAND:=xsel -i -b}"
     fi
