@@ -1,13 +1,13 @@
 # vimclip
 
 vimclip is a tiny script to spawn your favorite `$EDITOR` and leave what you typed in your clipboard.
-I like to think of it as a poor man's [vim-anywhere](https://github.com/cknadler/vim-anywhere).
+I like to think of it as a lightweight [vim-anywhere](https://github.com/cknadler/vim-anywhere).
 
 ## Installation and Usage
 
 ### Step 1: Dependencies
 
-By default, vimclip relies on `xsel` on Linux and `pbcopy` on macOS to copy what you typed into the clipboard.
+By default, vimclip relies on `xsel` (X11) / `wl-copy` (Wayland) on Linux and `pbcopy` on macOS to copy what you typed into the clipboard.
 Make sure they are available, or make vimclip use a different command by setting `$VIMCLIP_CLIPBOARD_COMMAND`.
 
 You should also set `$EDITOR` to your favorite editor (probably vim).
@@ -29,7 +29,15 @@ Call it vimclip, set the command to `gnome-terminal -- vimclip`, and assign the 
 **Other terminal emulators**
 
 For **KDE's konsole** set the command to `konsole -e vimclip`.
-For **kitty**  simply set it to `kitty vimclip`.
+For **kitty** simply set it to `kitty vimclip`.
+
+**macOS iTerm**
+
+Make an AppleScript to open an iTerm window with the command `zsh -c $HOME/bin/vimclip` (or wherever you placed vimclip).
+Then make a keyboard shortcut to invoke the script.
+See also https://github.com/hrantzsch/vimclip/issues/3.
+
+**Others**
 
 If you run another desktop environment with another terminal emulator I'm sure you'll be able to figure it out as well.
 Don't hesitate to open an issue if not.
